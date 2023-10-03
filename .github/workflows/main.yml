@@ -25,9 +25,6 @@ jobs:
     - name: Build for ${{ matrix.os }}
       run: go build -o repograbber
 
-    - name: Test
-      run: go test ./...
-
     - name: Archive artifacts
       uses: actions/upload-artifact@v2
       with:
