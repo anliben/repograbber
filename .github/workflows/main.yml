@@ -1,0 +1,41 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.18 # Substitua pela versão do Go que você deseja usar
+
+    - name: Build for ${{ matrix.os }}
+      run: go build -o repograbber
+
+    - name: Test
+      run: go test ./...
+
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: repograbber-${{ matrix.os }}
+        path: repograbber
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: repograbber-${{ matrix.os }}
+        path: repograbber
